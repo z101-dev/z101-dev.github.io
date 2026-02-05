@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>&lt;3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: '8bit';
+            src: url('fonts/8bit.ttf') format('truetype');
+        }
+
+        #custom-title-bar {
+            -webkit-app-region: drag;
+            height: 35px;
+            background-color: #ff9aab;
+            color: rgb(255, 220, 220);
+            font-size: 1.5em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            font-family: '8bit', cursive;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+        }
+
+        #window-controls {
+            display: flex;
+            -webkit-app-region: no-drag;
+        }
+
+        #window-controls button {
+            background: transparent;
+            border: none;
+            padding: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        #window-controls button img {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1); /* agar warna putih di atas pink */
+        }
+
+        #window-controls button:hover img {
+            filter: brightness(0.9) invert(1) drop-shadow(0 0 2px white);
+        }
+
+        body {
+            padding-top: 35px; /* Untuk topbar */
+            margin: 0;
+            padding: 0;
+            background: url('cute.gif') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: '8bit', cursive;
+            color: white;
+            text-shadow: 2px 2px 4px #000;
+        }
+        #lyrics {
+            font-size: 2.8em;
+            text-align: center;
+            background: rgb(225 145 145 / 50%);
+            padding: 30px;
+            border-radius: 15px;
+            min-width: 80%;
+            min-height: 100px;
+        }
+        .cursor {
+            display: inline-block;
+            width: 15px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-title-bar">
+        <div class="title">Kamu Cantik, Kamu Baik! &lt;3</div>
+        <div id="window-controls">
+            <button id="home-btn"><img src="assets/home.png"></button>
+            <button id="max-btn"><img src="assets/maximize.png"></button>
+            <button id="close-btn"><img src="assets/close.png"></button>
+        </div>
+    </div>
+
+    <div id="lyrics"><span id="text"></span><span class="cursor">|</span></div>
+
+    <script>
+        document.getElementById('home-btn').addEventListener('click', () => {
+            location.reload();
+        });
+        document.getElementById('max-btn').addEventListener('click', () => {
+            window.electronAPI.sendWindowControl('maximize');
+        });
+        document.getElementById('close-btn').addEventListener('click', () => {
+            window.electronAPI.sendWindowControl('close');
+        });
+
+        const lyrics = [
+            "Karena kamu cantik",
+            "Kan ku beri segalanya apa yang ku punya",
+            "Dan hatimu baik",
+            "Sempurnalah duniaku saat kau disisiku",
+            "Bukan karena make up di wajahmu",
+            "Atau lipstik merah itu",
+            "Lembut hati tutur kata",
+            "Terciptalah cinta yang ku puja"
+        ];
+
+        const settings = [
+            { delay: 1300, speed: 90 },
+            { delay: 400, speed: 90 },
+            { delay: 1200, speed: 115 },
+            { delay: 10, speed: 110 },
+            { delay: 400, speed: 90 },
+            { delay: 1100, speed: 95 },
+            { delay: 400, speed: 100 },
+            { delay: 1000, speed: 95 }
+        ];
+
+        let index = 0;
+        let charIndex = 0;
+        const display = document.getElementById('text');
+
+        function typeLine() {
+            if (index >= lyrics.length) {
+                display.textContent = "<3";
+                return;
+            }
+
+            const line = lyrics[index];
+            const config = settings[index];
+
+            if (charIndex < line.length) {
+                display.textContent += line.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeLine, config.speed);
+            } else {
+                index++;
+                charIndex = 0;
+                setTimeout(() => {
+                    display.textContent = '';
+                    typeLine();
+                }, config.delay);
+            }
+        }
+
+        setTimeout(typeLine, 0);
+    </script>
+</body>
+</html>
