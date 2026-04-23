@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🎉</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: white;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px 30px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .message {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-main {
+            background: linear-gradient(45deg, #ff7e5f, #feb47b);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 126, 95, 0.4);
+        }
+
+        /* Tombol WA disembunyikan di awal */
+        #waBtn {
+            display: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: slideUp 0.5s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .btn-active {
+            background: #4caf50 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1 class="title">HBD! 🎂</h1>
+        <p class="message" id="textMsg">
+         Haii👋🏻,
+         
+Selamat ulang tahun🎉🎉!! Di hari spesial ini, aku berdoa semoga kebahagiaan, kesehatan, dan kesuksesan selalu menyertaimu. Teruslah bersinar! ✨, semangatt🔥💪🏻
+        </p>
+
+        
+        <div class="btn-group">
+            <button class="btn btn-main" id="celebrateBtn">Buka Kejutan 🎁</button>
+            
+            <a href="https://wa.me/628195724185text=Makasih%20ya%20supriseyaa!" 
+               class="btn" id="waBtn">
+               nomber ku
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const celebrateBtn = document.getElementById('celebrateBtn');
+        const waBtn = document.getElementById('waBtn');
+        const textMsg = document.getElementById('textMsg');
+
+        celebrateBtn.addEventListener('click', () => {
+            // 1. Efek Confetti
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            // 2. Ubah tampilan tombol pertama
+            celebrateBtn.innerText = "klik ";
+            celebrateBtn.classList.add('btn-active');
+
+            // 3. Ubah teks pesan
+            textMsg.innerText = "Semoga harimu menyenangkan! Jangan lupa hubungi aku ya jika kamu suka kejutan ini. ❤️";
+
+            // 4. Tampilkan tombol WhatsApp setelah jeda sebentar (0.5 detik)
+            setTimeout(() => {
+                waBtn.style.display = 'inline-block';
+            }, 500);
+        });
+    </script>
+</body>
+</html>
